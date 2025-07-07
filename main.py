@@ -9,12 +9,10 @@ def get_otp():
         data = request.get_json()
         email = data.get("email")
         password = data.get("password")
-        if not email or not password:
-            return jsonify({"result": "❌ Email/password not provided"}), 400
         result = fetch_otp_from_email(email, password)
-        return jsonify({"result": result})
+        return jsonify({"status": "success", "result": result})
     except Exception as e:
-        return jsonify({"result": f"❌ Error: {str(e)}"}), 500
+        return jsonify({"status": "error", "message": str(e)}), 500
 
 if __name__ == "__main__":
-    app.run(debug=True)
+    app.run(host="0.0.0.0", port=8000)
